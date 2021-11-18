@@ -46,6 +46,11 @@
       padding: 8px 2px;
       width: 122px;
     }
+
+    .hello{
+      margin-top: 10%;
+      margin-left: 20%;
+    }
   </style>
 </head>
 
@@ -87,6 +92,22 @@
     </section>
   </main>
 
+  <!-- Step 3: Trying Try/Catch -->
+  <div class="s3">
+    <h2>STEP 3</h2>
+    <p>Please Enter Order Number (must be positive number)</p>
+    <input type="text" id="num">
+    <button onclick="orderNumber()">Enter</button>
+    <p id="message"></p>
+  </div>
+  <div class="s4">
+    <h2>STEP 4</h2>
+    <p>Please Enter Order Number (must be positive number and 6 characters long)</p>
+    <input type="text1" id="num1">
+    <button onclick="orderNumber1()">Enter</button>
+    <p id="message1"></p>
+  </div>
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -100,8 +121,160 @@
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    /*
+      Step 2: Iterate through all buttons and adds onclick component
+    */
+    for(let i=0; i<errorBtns.length;i++){
+      errorBtns[i].onclick = function(){consoleErrors(errorBtns[i].outerText)}; 
+    }
+
+    /*
+      Step 2: Chooses which console to use onclick based on the text in the button
+    */
+    function consoleErrors(consoleName){
+      if(consoleName == 'Console Log'){
+        console.log('log');
+      }
+      else if(consoleName == 'Console Error'){
+        console.error("A mistake was made")
+      }
+      else if(consoleName == 'Console Count'){
+        console.count('count');
+      }
+      else if(consoleName == 'Console Warn'){
+        console.warn('warn');
+      }
+      else if(consoleName == 'Console Assert'){
+        const x = 5;
+        const y = 3;
+        const reason = 'x is expected to be less than y';
+        console.assert(x < y, {x, y, reason});
+      }
+      else if(consoleName == 'Console Clear'){
+        console.clear();
+      }
+      else if(consoleName == 'Console Dir'){
+        console.dir(document.head);
+      }
+      else if(consoleName == 'Console dirxml'){
+        console.dirxml(document);
+      }
+      else if(consoleName == 'Console Group Start'){
+        const label = 'Hello TA';
+        console.group(label);
+        console.info('Leo');
+        console.info('Mike');
+        console.info('Don');
+        console.info('Raph');
+      }
+      else if(consoleName == 'Console Group End'){
+        const label = 'Hello TA';
+        console.groupEnd(label);
+      }
+      else if(consoleName == 'Console Table'){
+        console.table([
+          {
+            first: 'Melissa',
+            last: 'Ignacio',
+          },
+          {
+            first: 'Hello',
+            last: 'World',
+          },
+          {
+            first: 'Taylor',
+            last: 'Swift',
+          }
+        ]);
+      }
+      else if(consoleName == 'Start Timer'){
+        console.time();
+      }
+      else if(consoleName == 'End Timer'){
+        console.timeEnd();
+      }
+      else if(consoleName == 'Console Trace'){
+        const first = () => { second(); };
+        const second = () => { third(); };
+        const third = () => { fourth(); };
+        const fourth = () => { console.trace(); };
+        first();
+      }
+      else if(consoleName == 'Trigger a Global Error'){
+        const hello = "hello";
+        hello = "hi";
+      }
+    }
+
+    /*
+      Step 3: Trying Try/Catch -> throws error when order number entered is negative
+    */
+    function orderNumber() {
+
+      try {
+        let inputValue = document.getElementById('num').value;
+          if (inputValue < 0) {
+              throw ("This is an invalid order number");
+          } else {
+              document.getElementById('message').innerHTML = "Loading Order Number...";
+          }
+      } catch (error) {
+          alert(error);
+      }finally{
+        document.getElementById('num').value = "";
+        setTimeout(() => {document.getElementById('message').innerHTML = ""},1000);
+        
+
+      }
+    }
+    /*
+      Step 4: Throw and Custom Errors
+    */
+    //order number cannot be negative
+    class NegativeOrderNumber extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "NegativeOrderNumber"; 
+      }
+    }
+
+    //order number must be 6 numbers long
+    class ShortOrderNumber extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ShortOrderNumber"; 
+      }
+    }
+
+    function getError() {
+      let inputValue = document.getElementById('num1').value;
+      if (inputValue < 0) {
+          throw new NegativeOrderNumber(inputValue);
+      }
+      else if(inputValue.length != 6){
+          throw new ShortOrderNumber(inputValue);
+      }
+      else {
+          document.getElementById('message1').innerHTML = "Loading Order Number...";
+      }
+    }
+
+    function orderNumber1() {
+      try {
+        getError();
+      } catch (error) {
+        if (error instanceof NegativeOrderNumber) {
+          alert("Negative order Number: " + error.message); 
+        }
+        else if (error instanceof ShortOrderNumber){
+          alert("Order Number Must be 6 Numbers: " + error.message); 
+        }
+      }finally{
+        document.getElementById('num1').value = "";
+        setTimeout(() => {document.getElementById('message1').innerHTML = ""},1000);
+      }
+    }
+
   </script>
 </body>
 
