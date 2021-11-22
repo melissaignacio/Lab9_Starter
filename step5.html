@@ -3,20 +3,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Chapter 2 : JavaScript Error Reporting Demo</title>
-
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-<script src="errorreporter.js" type="text/javascript"></script>
- 
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "e9eb806865b14c10a044563560eb1b20"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
+                        
+<!-- tried getting it to work but was not able to :( -->
+
+<script src="errorreporter.js" ></script>
+<script type="text/javascript">
+
 /* scripts that may trigger errors */
 function badCode()
 {
   alert('Good code running when suddenly...');
-  abooM('bad code!'); /* BAD CODE ON PURPOSE */
-                         
+  abooM('bad code!'); /* BAD CODE ON PURPOSE */ 
 }
 </script>
  
-
 </head>
 <body>
  
@@ -31,5 +38,3 @@ function badCode()
  
 </body>
 </html>
-
-                        

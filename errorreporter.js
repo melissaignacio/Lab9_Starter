@@ -1,9 +1,12 @@
-window.TrackJS && TrackJS.install({ 
-    token: "e9eb806865b14c10a044563560eb1b20"
-    // for more configuration options, see https://docs.trackjs.com
-  });
 
-  TrackJS.track('Testing TrackJS!');
+
+try{
+  const hello = "hi";
+  if (hello != "hello")
+    throw ("This definition of hello is invalid")
+}catch(e){
+  alert(e);
+}
 
 /* object literal wrapper to avoid namespace conflicts */
 var AjaxTCRExamples = {};
@@ -38,6 +41,7 @@ AjaxTCRExamples.encodeValue = function(val)
  
 AjaxTCRExamples.reportJSError = function (errorMessage,url,lineNumber)
 {
+
     function sendRequest(url,payload)
     {
          var img = new Image();
@@ -64,12 +68,12 @@ AjaxTCRExamples.registerErrorHandler = function ()
        var oldError = window.onerror;
        var newErrorHandler = function (errorMessage,url,lineNumber) { AjaxTCRExamples.reportJSError(errorMessage,url,lineNumber); oldError(errorMessage,url,lineNumber); }
        window.onerror = newErrorHandler;
+       fetch("https://capture.trackjs.com/capture?token=e9eb806865b14c10a044563560eb1b20", {
+        method: "POST"});
+
       }
     else
       window.onerror = AjaxTCRExamples.reportJSError;
-      console.log("error");
-      fetch("https://capture.trackjs.com/capture?token=e9eb806865b14c10a044563560eb1b20", {
-        method: "POST"});
 }
  
 /* bind the error handler */
